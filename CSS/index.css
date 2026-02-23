@@ -1,0 +1,78 @@
+body {
+  font-family: "Story Script", sans-serif;
+  font-weight: 400;
+  font-style: normal;
+  box-sizing: border-box;
+  margin: 0 auto;
+  background-color: #111828;
+  /* overflow-x: hidden; */
+}
+
+main {
+  width: 95%;
+  margin: 0 auto;
+}
+
+.title-name {
+  text-align: center;
+  font-family: 'Marvel', sans-serif;
+  color: rgb(255, 255, 255);
+  font-size: 60px;
+  background-color: red;
+  margin: 0 auto;
+  width: 12%;
+  font-weight: 900;
+}
+
+nav {
+  position: sticky;
+  font-size: 25px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  background-color: #202020;
+  padding: 15px;
+  margin: 0 auto;
+}
+
+.nav {
+  margin-top: 20px;
+  color: #75848b;
+  text-align: center;
+  align-items: center;
+  font-size: smaller;
+}
+
+p {
+  font-size: 20px;
+  margin: 20px;
+  color: #75848b;
+
+}
+
+.info-title {
+  text-align: center;
+  text-decoration: underline;
+  color: rgb(255, 254, 254);
+  font-size: 35px;
+  padding: 25px;
+}
+
+a {
+  text-decoration: none;
+  margin-right: 50px;
+  color: rgb(255, 255, 255);
+}
+
+
+h3 {
+  color: rgb(255, 255, 255);
+  text-decoration: underline;
+}
+
+footer {
+  position:absolute;
+  margin: 0 auto;
+  bottom: 0;
+  text-align: center;
+}
