@@ -102,7 +102,7 @@ fetch('https://www.swapi.tech/api/starships?page=2&limit=10')
         //Do something with the data
         console.log(data);
 
-        //Display Repositories in List
+        //Display Starships in List
         const shipSection = document.getElementById('starships');
 
         const shipList = shipSection.querySelector('ul');
@@ -132,7 +132,7 @@ fetch('https://www.swapi.tech/api/films')
         //Do something with the data
         console.log(data);
 
-        //Display Repositories in List
+        //Display films in List
         const filmList = document.querySelector('#movies ul');
 
         for (let i = 0; i < data.result.length; i++) {
