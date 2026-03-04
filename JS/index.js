@@ -12,69 +12,86 @@ copyright.innerHTML = `Shantel Williams ${thisYear} ©️ `;
 footer.appendChild(copyright);
 
 
-// const charSection = document.getElementById('charSection');
-// const charList = charSection.querySelector('ul');
-// // console.log(comicSection);
+const charList = document.querySelector('#characters ul');
 
-// fetch('https://www.swapi.tech/api/people?page=2&limit=10')
-//     .then(response => {
-//         if (!response.ok) {
-//             throw new Error('Request failed');
-//         }
-//         return response.text(); 
-//     })
-//     .then(text => {
-//         //Do something with the data
-//         const data = JSON.parse(text);
-//         console.log(data);
-
-//         //Display comics in List
-//         const characters = data.results || [];
-//         // charList.innerHTML = '';
-
-//         characters.forEach(issue => {
-//             const listItem = document.createElement('li');
-//             listItem.textContent = issue.title;
-//             charList.appendChild(listItem);
-//         })
-//     })
-//     .catch(error => {
-//         console.error('An error occurred:', error); //Handling Errors
-//     });
-
-
-//Fetch for people
-fetch('https://www.swapi.tech/api/people?page=2&limit=10')
-    .then(response => {
-        if (!response.ok) {
-            throw new Error('Request failed');
-        }
-        return response.json(); // Parse the response as JSON
+fetch('https://swapi.dev/api/people/')
+    .then(function (response) {
+        return response.json();
     })
-    .then(data => {
-        //Do something with the data
-        console.log(data);
-
-        //Display Repositories in List
-        const charSection = document.getElementById('characters');
-
-        const charList = charSection.querySelector('ul');
+    .then(function (data) {
 
         for (let i = 0; i < data.results.length; i++) {
-            const char = document.createElement('li');
 
-            char.textContent = data.results[i].name;
+            let character = data.results[i];
 
-            charList.appendChild(char);
+            let li = document.createElement('li');
+            li.className = "card";
+
+            let header = document.createElement('div');
+            header.className = "card-header";
+            header.textContent = character.name;
+
+            let details = document.createElement('div');
+            details.className = "card-details";
+            details.style.display = "none";
+
+            header.addEventListener('click', async function () {
+
+                // close all cards first
+                let allCards = document.querySelectorAll('.card-details');
+                for (let j = 0; j < allCards.length; j++) {
+                    allCards[j].style.display = "none";
+                }
+
+                // open this one
+                details.style.display = "block";
+
+                // fetch homeworld
+                let homeworldName = "Unknown";
+
+                try {
+                    let homeRes = await fetch(character.homeworld);
+                    let homeData = await homeRes.json();
+                    homeworldName = homeData.name;
+                } catch (error) {
+                    console.log("Could not get homeworld");
+                }
+
+                // fetch films
+                let filmNames = [];
+
+                try {
+                    for (let k = 0; k < character.films.length; k++) {
+                        let filmRes = await fetch(character.films[k]);
+                        let filmData = await filmRes.json();
+                        filmNames.push(filmData.title);
+                    }
+                } catch (error) {
+                    console.log("Could not get films");
+                }
+
+                details.innerHTML = `
+                    <p>Gender: ${character.gender}</p>
+                    <p>Birth Year: ${character.birth_year}</p>
+                    <p>Homeworld: ${homeworldName}</p>
+                    <p>Films: ${filmNames.join(', ')}</p>
+                `;
+            });
+
+            li.appendChild(header);
+            li.appendChild(details);
+            charList.appendChild(li);
         }
+
     })
-    .catch(error => {
-        console.error('An error occurred:', error); //Handling Errors
+    .catch(function (error) {
+        console.log("Something went wrong");
     });
 
-    //Fetch for Starships
 
-    fetch('https://www.swapi.tech/api/starships?page=2&limit=10')
+//Fetch for Starships
+
+fetch('https://www.swapi.tech/api/starships?page=2&limit=10')
     .then(response => {
         if (!response.ok) {
             throw new Error('Request failed');
@@ -103,7 +120,7 @@ fetch('https://www.swapi.tech/api/people?page=2&limit=10')
     });
 
 
-    //Fetch for movies
+//Fetch for movies
 fetch('https://www.swapi.tech/api/films')
     .then(response => {
         if (!response.ok) {
@@ -129,3 +146,4 @@ fetch('https://www.swapi.tech/api/films')
     .catch(error => {
         console.error('An error occurred:', error); //Handling Errors
     });
+
